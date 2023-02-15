@@ -193,9 +193,14 @@ funcao
 
             printf(" Variaveis locais que serao removidas: %d\n", contaVar);
             // Remover variaveis locais
-            removeLocais(contaVar);   
+            removeLocais(contaVar);
+
+            // printf(" OLHA AQUI MLR: %d\n", contaPar);
+            // for (int i = contaVar + contaPar; i > 0; i--)  // TESTE: desempilhando os tipo das variaveis
+            //     desempilha('t'); 
 
             mostraTabela();
+            // mostraPilha();
             printf("Qtd variaveis locais: %d\n", contaVar);
         }
     ;
@@ -218,20 +223,11 @@ parametro
 //-------------------------------------
             strcpy(elemTab.id, atomo);
             elemTab.cat = 'P';
-
-            /* TESTEEE*/
-            // escopo == 'G'? (elemTab.end = contaVar) : (elemTab.end = contaVarL);
             elemTab.end = contaVar;
-
-
             elemTab.tip = tipo;
             elemTab.esc = escopo; 
             elemTab.rot = -1;       // Tratando os rótulos dos parâmetros
             insereSimbolo(elemTab);
-
-
-            // escopo == 'G'? contaVar++ : contaVarL++;
-
             contaPar++; 
             //printf("\ncontaPar = %d\n", contaPar);    // Contando quantos parâmetros
             //printf("\nNao pode ter categoria: %d\n", elemTab.rot);
@@ -270,7 +266,8 @@ retorno
             //verificar se está no escopo local 
             //verificar se o tipo da expressão é compatível
             int tip = desempilha('t');
-            mostraPilha();
+            
+            // mostraPilha();
             if (tip != tabSimb[posTab - ( 1 + contaPar + contaVar)].tip)
                 yyerror ("Incompatibilidade de tipo");
             
@@ -367,9 +364,12 @@ atribuicao
         }
     T_ATRIBUICAO expressao
         { 
-            // mostraPilha();
+            puts("Isolando o erro 1");
+            mostraPilha();
             int tip = desempilha('t');
             int pos = desempilha('p');
+            puts("-------------------");
+
             if (tabSimb[pos].tip != tip)
                 yyerror("Incompatibilidade de tipo!");
             if (tabSimb[pos].esc == 'G'){
@@ -442,11 +442,16 @@ identificador
 chamada 
     : // sem parênteses é uma variável
     {
+        puts("Isolando o erro 2");
+        mostraPilha();
         int pos = desempilha('p');
+        puts("-------------------");
+
         if (tabSimb[pos].esc == 'G')
             fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
         else
             fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
+            // printf("O ESCOPO AQUI EH: %c\n", tabSimb[pos].esc);
         empilha(tabSimb[pos].tip, 't');
     }
     | T_ABRE 
@@ -454,7 +459,15 @@ chamada
       lista_argumentos  
       T_FECHA
         {
-            int pos = desempilha('p');
+            puts("Isolando o erro 3");
+            
+            desempilha('t');
+            desempilha('t');
+
+            mostraPilha();
+            int pos = desempilha('p');           // O ERRO ESTÁ AQUI
+            puts("-------------------");
+
             fprintf(yyout,"\tSVCP\n"); 
             fprintf(yyout,"\tDSVS\tL%d\n", tabSimb[pos].rot);
             empilha(tabSimb[pos].tip, 't');

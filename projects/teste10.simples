@@ -1,5 +1,5 @@
 programa teste10
-func inteiro maior (inteiro a inteiro b)
+func inteiro menor (inteiro a inteiro b)
 inicio
     se a > b 
         entao retorne a 

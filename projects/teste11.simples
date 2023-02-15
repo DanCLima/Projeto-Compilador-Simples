@@ -1,15 +1,16 @@
-programa testatipos
-    inteiro a b c
-    logico x y z
-
-func inteiro maior (inteiro d inteiro g )
-    inteiro i k l 
-
+programa teste2
+    inteiro x y
+func inteiro maior (inteiro a inteiro b )
+    logico c 
     inicio
-    escreva d 
+    c <- a > b
+    se c 
+        entao retorne a 
+        senao retorne b
+    fimse
 fimfunc
-
 inicio
-escreva maior (2 )
-
+    leia x
+    leia y
+    escreva maior (x y)
 fimprograma 

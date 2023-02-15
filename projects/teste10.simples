@@ -1,16 +1,11 @@
-programa daniel
-    inteiro a b c
-    logico x y z
-
+programa teste10
+func inteiro maior (inteiro a inteiro b)
 inicio
-    x <- F
-    a <- 10
-    se a > 1 entao 
-        escreva a
-        senao escreva b
+    se a > b 
+        entao retorne a 
+        senao retorne b
     fimse
-    enquanto x faca
-        escreva a
-        a <- a - 1
-    fimenquanto
+fimfunc
+inicio
+    escreva maior (10 20)
 fimprograma

@@ -85,5 +85,19 @@ funcao
     valor tipo
 
 
+-----------------------------------------------------------------
 
+Comparar os parâmetros após o abre e fecha parênteses da função. 
+
+Erros: 
+    Tipo da função que resultou tem que ser igual ao tipo atribuido
+    Quantidade de parâmetros diferente (mais argumentos que parametros)
+    tipos de parametros sao diferentes 
+
+-------------- Alterando a permissão para rodar 
+chmod 755 simples
+
+----------------------------------
+Tratar composição de função
+f(10 f(10 20))
     

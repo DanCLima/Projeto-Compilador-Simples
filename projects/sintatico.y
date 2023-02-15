@@ -257,18 +257,30 @@ comando
 retorno 
     : T_RETORNE 
         {
+            // mostraPilha();
             // printf("ESCOPO AQUI: %c\n", escopo);
             if (escopo != 'L')                      //REALIZAR TESTE PARA VERIFICAR SE DEU CERTO!!!
-                yyerror("Incompatibilidade de tipo!");
+                yyerror("Uso inadequado do retorne!");
+            
         }
     expressao       //só pode ser usado num contexto local (utilizar o flag que diferencia se é global ou local) 
         {
+            mostraPilha();
             //verificar se está no escopo local 
             //verificar se o tipo da expressão é compatível
+            int tip = desempilha('t');
+            if (tip != tabSimb[posTab - ( 1 + contaPar + contaVar)].tip)
+                yyerror ("Incompatibilidade de tipo");
             
             //ARZL armazenar no endereço que foi deixado pra função (AMEM 1)
-            //DMEM numero de variaveis 
-            //RTSP numero de parametros
+            fprintf(yyout,"\tARZL\t%d\n", tabSimb[posTab - ( 1 + contaPar + contaVar)].end);
+
+            // DMEM numero de variaveis locais
+            if ( contaVar > 0)
+                fprintf(yyout,"\tDMEM\t%d\n", contaVar);
+
+            // RTSP numero de parametros
+            fprintf(yyout,"\tRTSP\t%d\n", tabSimb[posTab - ( 1 + contaPar + contaVar)].npa);
         }
     ;
 // ---------------------------------------------------------------------------

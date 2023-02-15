@@ -181,20 +181,21 @@ funcao
         }
       variaveis 
         {
-            mostraTabela();
+            //mostraTabela();
+            if (contaVar) 
+                fprintf(yyout,"\tAMEM\t%d\n", contaVar); 
         }
       
       T_INICIO lista_comandos T_FIMFUNC
         {
             // mostraPilha();
-            //remover variaveis locais
-            // for (int i = contaVar; i > 0; i--) {
-            //     desempilha('v')
-            // }
-
             escopo = 'G';
-            mostraTabela();
 
+            printf(" Variaveis locais que serao removidas: %d\n", contaVar);
+            // Remover variaveis locais
+            removeLocais(contaVar);   
+
+            mostraTabela();
             printf("Qtd variaveis locais: %d\n", contaVar);
         }
     ;
@@ -265,10 +266,11 @@ retorno
         }
     expressao       //só pode ser usado num contexto local (utilizar o flag que diferencia se é global ou local) 
         {
-            mostraPilha();
+            // mostraPilha();
             //verificar se está no escopo local 
             //verificar se o tipo da expressão é compatível
             int tip = desempilha('t');
+            mostraPilha();
             if (tip != tabSimb[posTab - ( 1 + contaPar + contaVar)].tip)
                 yyerror ("Incompatibilidade de tipo");
             
@@ -276,14 +278,13 @@ retorno
             fprintf(yyout,"\tARZL\t%d\n", tabSimb[posTab - ( 1 + contaPar + contaVar)].end);
 
             // DMEM numero de variaveis locais
-            if ( contaVar > 0)
+            if (contaVar)
                 fprintf(yyout,"\tDMEM\t%d\n", contaVar);
 
             // RTSP numero de parametros
             fprintf(yyout,"\tRTSP\t%d\n", tabSimb[posTab - ( 1 + contaPar + contaVar)].npa);
         }
     ;
-// ---------------------------------------------------------------------------
 
 entrada_saida
     : leitura
@@ -293,8 +294,12 @@ entrada_saida
 leitura 
     : T_LEIA T_IDENTIFICADOR
         { 
-            int pos = buscaSimbolo(atomo);         
-            fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+            int pos = buscaSimbolo(atomo);  
+            if (tabSimb[pos].esc == 'G'){
+                fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+            } else {
+                fprintf(yyout,"\tLEIA\n\tARZL\t%d\n", tabSimb[pos].end);
+            }
         }
     ;
 
@@ -362,12 +367,16 @@ atribuicao
         }
     T_ATRIBUICAO expressao
         { 
-            mostraPilha();
+            // mostraPilha();
             int tip = desempilha('t');
             int pos = desempilha('p');
             if (tabSimb[pos].tip != tip)
                 yyerror("Incompatibilidade de tipo!");
-            fprintf(yyout,"\tARZG\t%d\n", tabSimb[pos].end); 
+            if (tabSimb[pos].esc == 'G'){
+                fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+            } else {
+                fprintf(yyout,"\tLEIA\n\tARZL\t%d\n", tabSimb[pos].end);
+            }
         }
     ;
 
@@ -459,13 +468,6 @@ lista_argumentos
 
 termo
     : identificador chamada
-    /* : T_IDENTIFICADOR
-        {
-            int pos = buscaSimbolo(atomo);
-            fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
-            empilha(tabSimb[pos].tip, 't');
-            
-        } */
     | T_NUMERO
         { 
             fprintf(yyout,"\tCRCT\t%s\n", atomo); 

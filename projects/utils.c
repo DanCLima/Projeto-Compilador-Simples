@@ -152,7 +152,7 @@ void inserePAR (int tipoPar, int contaPar, int indice) {        // tipoPar receb
     i--;
     indice--;   // Indice = quantidade de parâmetros-1, pra usar a posição 0 do vetor lista de parâmetros
 
-    tabSimb[i-contaPar].par[indice] = tipoPar;
+    tabSimb[i-contaPar].par[indice] = tipoPar;              //Verificar se não vai ser preciso somar o contaPar + contaVar (variaveis locais)
     // printf("\nInserindo o tipo %s no indice %d\n", tipoPar == INT? "INT" : "LOG", indice);
 }
 
@@ -172,10 +172,23 @@ void mostraVetorPAR (int contaPar, int contaVar) {
 /* Rotina que ajusta o endereço da função e dos parâmetros  */
 void ajustaParametros(int contaPar) {
     int i = posTab;     // Posição atual da tabela
+
     int end = -3;       // Iniciando a posição do último parâmetro com -3
     i--;
 
     for (int j = 0; j < contaPar + 1; j++, i--, end--) {
         tabSimb[i].end = end;
     }
+}
+
+void removeLocais (int contaVar) {
+    int i;
+
+    // printf("A posTab eh: %d\n", posTab);
+    for (i = (posTab-1); i > 0 && tabSimb[i].cat != 'F' ; i--) {
+        ;
+    }
+    posTab = i + 1;     //Incrementar 1, porque a nova posição tem que ser um valor abaixo
+    // printf("A func eh: %s\n", tabSimb[i].id);
+
 }

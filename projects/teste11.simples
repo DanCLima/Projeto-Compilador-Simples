@@ -2,14 +2,14 @@ programa testatipos
     inteiro a b c
     logico x y z
 
-func inteiro maior (inteiro d logico f logico g)
+func inteiro maior (inteiro d inteiro g )
     inteiro i k l 
-    logico j
+
     inicio
     escreva d 
 fimfunc
 
 inicio
-escreva maior (2)
+escreva maior (2 )
 
 fimprograma 

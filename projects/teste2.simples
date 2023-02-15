@@ -1,0 +1,15 @@
+programa teste1
+logico a
+logico b 
+func inteiro maior (logico c inteiro d)
+logico a
+inteiro b
+inicio
+    se c > d
+        entao retorne c
+        senao retorne d
+fimfunc
+inicio
+    maior (10 20) 
+    fimse
+fimprograma

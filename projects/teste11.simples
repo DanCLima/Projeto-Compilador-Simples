@@ -1,0 +1,15 @@
+programa testatipos
+    inteiro a b c
+    logico x y z
+
+func inteiro maior (inteiro d logico f logico g logico h logico m inteiro n)
+    inteiro i k l 
+    logico j
+    inicio
+    escreva d 
+fimfunc
+
+inicio
+escreva maior (2)
+
+fimprograma 

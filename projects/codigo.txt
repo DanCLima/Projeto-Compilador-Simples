@@ -1,0 +1,3 @@
+&& tabSimb[i].esc != elem.esc 
+
+./simples teste2

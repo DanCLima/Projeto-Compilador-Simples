@@ -1,0 +1,89 @@
+utils.c -> tabela de simbolos, acrescentar mais colunas na função mostra tabela, criar outra funcao que atualize o endereço dos parametros e da função, preencher a lista de parâmetros depois que passou por todos os parâmetros
+lexico.l -> acrescentar as palavra chave retorne, func, fimfunc (irão retornar token, os mesmos nomes retornados serão definidos nas regras),  acrescentar 3 regrinhas
+sintatico.y -> nomes retornados serão definidos nas regras
+
+variavel local é um deslocamento
+
+comentar no lexico.l com /* ... */
+
+retorne é um comando
+
+A tabela de simbolos deve ser a prioridade
+
+------------------------------------------------------------------------  07/02  ---------------------------------------------------------------------------------------------------------------------
+
+funcao 
+    : T_FUNC tipo T_IDENTIFICADOR 
+        {
+            escrever nome, tipo, cat, rotulo da função tabela de simbolos
+            escopo = 'L'
+        }
+    
+    T_ABRE parametros T_FECHA
+    {
+        ajustar parametros(); Voltar na tabela de simbolos ajustando os endereços com os respectivos valores negativos  Ex: func inteiro f' (inteiro a inteiro b)   ->  ( -5, -4, -3)           end     par
+                                                                                                                                                                                        f'      -5      [int, int]
+                                                                                                                                                                                        a       -4
+                                                                                                                                                                                        b       -3
+
+    }
+      variaveis T_INICIO lista_comandos T_FIMFUNC //remover todas as variaveis locais e parametros de acordo com o vetor PAR (lista com os tipos dos parâmetros (para função))
+        {
+            remover_variaveis_locais();
+            escopo = 'G'
+        }
+
+    ;
+
+
+    strcpy (elemTab.id, atomo);
+    elemTab.tip = tipo;
+    elemTab.cat = 'f';
+    elemTab.esc = escopo;
+    elemTab.rot = ++rotulo;
+    insereSimbolo(elemTab);
+    fprintf(yyout, "L%d \t ENSP \n", rotulo);
+
+
+
+rotulo = lugar na tabela para onde a execução vai ser desviada
+
+
+--------------- retorne 09/02 -------------------------------------
+comando 
+    : leitura escrita
+    | atribuicao
+    | selecao
+    ...
+    | retorne
+    ;
+
+retorne 
+    : T_RETORNE expressao       //só pode ser usado num contexto local (utilizar o flag que diferencia se é global ou local) 
+    {
+        //verificar se está no escopo local 
+        //verificar se o tipo é compatível
+
+        //ARZL armazenar no endereço que deixei pra função (AMEM 1)
+        //DMEM numero de variaveis 
+        //RTSP numero de parametros
+
+    }
+    ;
+
+
+funcao 
+    : T_FUNC tipo T_IDENTIFICADOR
+
+    T_ABRE lista_parametros T_FECHA
+    variaveis
+    T_INICIO
+        lista_comandos
+    T_FIMFUNC
+
+    Sugestão na pilha
+    valor tipo
+
+
+
+    

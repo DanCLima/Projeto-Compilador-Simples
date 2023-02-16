@@ -3,7 +3,7 @@ programa teste7
     logico a b c
 inicio
     leia x
-    enquanto (x + 2) faca    
+    enquanto (x + 2) > 0 faca    
         escreva x 
         x <- x - 1
     fimenquanto

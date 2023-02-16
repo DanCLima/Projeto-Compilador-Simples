@@ -459,8 +459,8 @@ chamada
       lista_argumentos  
       T_FECHA
         {
-            puts("Isolando o erro 3");
-            
+            puts("Isolando o erro 3");                          // TEM ALGUM ERRO AQUI
+                                                                    
             for (int i = contaPar + contaVar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
                 printf("O valor de i eh: %d\n", i);
                 desempilha('t');

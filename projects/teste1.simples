@@ -1,16 +1,11 @@
-programa teste2
-inteiro x y
+programa teste1
 func inteiro maior (inteiro a inteiro b)
-logico c
 inicio
-    c <- a > b
-    se c
+    se a > b
         entao retorne a
         senao retorne b
     fimse
 fimfunc
 inicio
-    leia x
-    leia y
-    escreva maior (x y)
+    escreva maior (10 20) 
 fimprograma

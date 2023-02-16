@@ -1,14 +1,10 @@
-programa teste1
-logico a inteiro b
-
-func inteiro maior (inteiro c inteiro d)
-inteiro g logico h inteiro i
-inicio
-    se a > b
-        entao retorne a
-        senao retorne b
+programa teste3
+inteiro x
+func inteiro quadrado (inteiro a)
+inicio 
+    retorne a * a 
 fimfunc
 inicio
-    maior (10 20) 
-    fimse
+    leia x
+    escreva quadrado (quadrado (x))
 fimprograma

@@ -1,16 +1,10 @@
-programa testatipos
-    inteiro a b c
-    logico x y z
-
+programa teste3
+inteiro x
+func inteiro quadrado (inteiro a)
+inicio 
+    retorne a * a 
+fimfunc
 inicio
-    x <- F
-    a <- 10
-    se a > 1 entao 
-        escreva a
-        senao escreva b
-    fimse
-    enquanto x faca
-        escreva a
-        a <- a - 1
-    fimenquanto
+    leia x
+    escreva quadrado (quadrado (x))
 fimprograma

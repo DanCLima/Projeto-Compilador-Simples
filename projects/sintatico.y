@@ -373,9 +373,9 @@ atribuicao
             if (tabSimb[pos].tip != tip)
                 yyerror("Incompatibilidade de tipo!");
             if (tabSimb[pos].esc == 'G'){
-                fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+                fprintf(yyout,"\tARZG\t%d\n", tabSimb[pos].end); 
             } else {
-                fprintf(yyout,"\tLEIA\n\tARZL\t%d\n", tabSimb[pos].end);
+                fprintf(yyout,"\tARZL\t%d\n", tabSimb[pos].end);
             }
         }
     ;
@@ -461,8 +461,10 @@ chamada
         {
             puts("Isolando o erro 3");
             
-            desempilha('t');
-            desempilha('t');
+            for (int i = contaPar + contaVar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
+                printf("O valor de i eh: %d\n", i);
+                desempilha('t');
+            }
 
             mostraPilha();
             int pos = desempilha('p');           // O ERRO ESTÁ AQUI

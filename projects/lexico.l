@@ -7,7 +7,7 @@ int yyerror (char *s);
 
 identificador [_a-zA-Z]([a-zA-Z0-9])*
 numero [0-9]+
-espaco [ \t]+
+espaco [ \t\r]+
 novanlinha [\n]
 
 %x coment

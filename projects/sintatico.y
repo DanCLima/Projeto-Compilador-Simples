@@ -174,7 +174,7 @@ funcao
                 inserePAR(desempilha('t'), contaPar, i);     // Desempilhando os valores 0 para INT e 1 para LOG
             }   
 
-            mostraVetorPAR(contaPar, contaVar);       // Teste para ver o vetor de parâmetros  
+            // mostraVetorPAR(contaPar, contaVar);       // Teste para ver o vetor de parâmetros  
 
             /* Ajustando o endereço da função e dos seus parâmetros */
             ajustaParametros(contaPar);
@@ -191,7 +191,7 @@ funcao
             // mostraPilha();
             escopo = 'G';
 
-            printf(" Variaveis locais que serao removidas: %d\n", contaVar);
+            // printf(" Variaveis locais que serao removidas: %d\n", contaVar);
             // Remover variaveis locais
             removeLocais(contaVar);
 
@@ -199,9 +199,9 @@ funcao
             // for (int i = contaVar + contaPar; i > 0; i--)  // TESTE: desempilhando os tipo das variaveis
             //     desempilha('t'); 
 
-            mostraTabela();
+            // mostraTabela();
             // mostraPilha();
-            printf("Qtd variaveis locais: %d\n", contaVar);
+            // printf("Qtd variaveis locais: %d\n", contaVar);
         }
     ;
 
@@ -364,11 +364,11 @@ atribuicao
         }
     T_ATRIBUICAO expressao
         { 
-            puts("Isolando o erro 1");
-            mostraPilha();
+            // puts("Isolando o erro 1");
+            // mostraPilha();
             int tip = desempilha('t');
             int pos = desempilha('p');
-            puts("-------------------");
+            // puts("-------------------");
 
             if (tabSimb[pos].tip != tip)
                 yyerror("Incompatibilidade de tipo!");
@@ -442,10 +442,10 @@ identificador
 chamada 
     : // sem parênteses é uma variável
     {
-        puts("Isolando o erro 2");
-        mostraPilha();
+        // puts("Isolando o erro 2");
+        // mostraPilha();
         int pos = desempilha('p');
-        puts("-------------------");
+        // puts("-------------------");
 
         if (tabSimb[pos].esc == 'G')
             fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
@@ -459,16 +459,16 @@ chamada
       lista_argumentos  
       T_FECHA
         {
-            puts("Isolando o erro 3");                          // TEM ALGUM ERRO AQUI
+            puts("\nIsolando o erro 3");                          // TEM ALGUM ERRO AQUI
                                                                     
             for (int i = contaPar + contaVar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
-                printf("O valor de i eh: %d\n", i);
+                // printf("O valor de i eh: %d\n", i);
                 desempilha('t');
             }
 
             mostraPilha();
             int pos = desempilha('p');           // O ERRO ESTÁ AQUI
-            puts("-------------------");
+            puts("-------------------\n");
 
             fprintf(yyout,"\tSVCP\n"); 
             fprintf(yyout,"\tDSVS\tL%d\n", tabSimb[pos].rot);
@@ -515,7 +515,7 @@ int main (int argc, char *argv[]) {
     argv++;
     if (argc < 2) {
         puts("\n Compilador Simples");
-        puts("\n\tUso:./simples <NOME>[.simples]\n\n");
+        puts("\n\tUso: ./simples <NOME>[.simples]\n\n");
         exit(10);
     }
     p = strstr(argv[0], ".simples"); // Função que procura uma string na string e posiciona no início
@@ -532,5 +532,5 @@ int main (int argc, char *argv[]) {
     yyout = fopen(nameOut, "wt");
     yyparse();
     puts ("Programa ok!");
-    mostraTabela();
+    /* mostraTabela(); */
 }

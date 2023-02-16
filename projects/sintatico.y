@@ -461,7 +461,7 @@ chamada
         {
             puts("\nIsolando o erro 3");                          // TEM ALGUM ERRO AQUI
                                                                     
-            for (int i = contaPar + contaVar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
+            for (int i = contaPar /*+ contaVar*/; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
                 // printf("O valor de i eh: %d\n", i);
                 desempilha('t');
             }

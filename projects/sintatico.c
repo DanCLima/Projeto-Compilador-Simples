@@ -549,7 +549,7 @@ static const yytype_int16 yyrline[] =
      246,   247,   248,   249,   256,   255,   287,   288,   292,   304,
      313,   318,   312,   338,   346,   337,   361,   360,   384,   389,
      394,   399,   404,   409,   414,   419,   424,   429,   433,   444,
-     458,   457,   480,   481,   485,   486,   491,   496,   501,   508
+     458,   457,   493,   494,   498,   499,   504,   509,   514,   521
 };
 #endif
 
@@ -1883,10 +1883,23 @@ yyreduce:
 #line 461 "sintatico.y"
         {
             puts("\nIsolando o erro 3");                          // TEM ALGUM ERRO AQUI
-                                                                    
-            for (int i = contaPar /*+ contaVar*/; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
-                // printf("O valor de i eh: %d\n", i);
-                desempilha('t');
+
+
+            mostraTabela();
+            int posicao = localizaFunc();  
+
+            /* Função que conta quantos tipos tem no topo da pilha */
+            mostraPilha();
+            int contaArg = contaTipoPilha('t');
+            
+            if(contaArg != contaPar) {
+                yyerror ("Incompatibilidade entre quantidade de argumentos e parametros!");
+            }
+
+            for (int i = contaPar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS
+                if(desempilha('t') != tabSimb[posicao].par[posicao + i]) {          // Verifica se o tipo do argumento passado é igual ao esperado no parâmetro da função. Caso não seja, retorna erro. (Resolve o problema de tipo e quantidade diferente)
+                    yyerror ("Incompatibilidade entre tipos de argumentos e parametros!");
+                }
             }
 
             mostraPilha();
@@ -1897,49 +1910,49 @@ yyreduce:
             fprintf(yyout,"\tDSVS\tL%d\n", tabSimb[pos].rot);
             empilha(tabSimb[pos].tip, 't');
         }
-#line 1901 "sintatico.c"
+#line 1914 "sintatico.c"
     break;
 
   case 65:
-#line 487 "sintatico.y"
+#line 500 "sintatico.y"
         { 
             fprintf(yyout,"\tCRCT\t%s\n", atomo); 
             empilha(INT, 't');
         }
-#line 1910 "sintatico.c"
+#line 1923 "sintatico.c"
     break;
 
   case 66:
-#line 492 "sintatico.y"
+#line 505 "sintatico.y"
         { 
             fprintf(yyout,"\tCRCT\t1\n"); 
             empilha(LOG, 't');
         }
-#line 1919 "sintatico.c"
+#line 1932 "sintatico.c"
     break;
 
   case 67:
-#line 497 "sintatico.y"
+#line 510 "sintatico.y"
         { 
             fprintf(yyout,"\tCRCT\t0\n"); 
             empilha(LOG, 't');
         }
-#line 1928 "sintatico.c"
+#line 1941 "sintatico.c"
     break;
 
   case 68:
-#line 502 "sintatico.y"
+#line 515 "sintatico.y"
         { 
             int t = desempilha('t');
             if (t != LOG) yyerror ("Incompatibilidade de tipo!");       // Verificação se o termo é lógico
             fprintf(yyout,"\tNEGA\n"); 
             empilha(LOG, 't');
         }
-#line 1939 "sintatico.c"
+#line 1952 "sintatico.c"
     break;
 
 
-#line 1943 "sintatico.c"
+#line 1956 "sintatico.c"
 
       default: break;
     }
@@ -2171,7 +2184,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 511 "sintatico.y"
+#line 524 "sintatico.y"
 
 
 int main (int argc, char *argv[]) {

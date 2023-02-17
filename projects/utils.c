@@ -25,6 +25,15 @@ struct elemTabSimbolos {
 
 int posTab = 0;
 
+// int vetorVerifica[MAX_PAR];
+
+// void insereVetorVerifica(int contaPar, int tipo) {
+//     for (int i = 0; i < contaPar; i++) {
+//         vetorVerifica[i] = tipo;
+//     }
+
+// }
+
 void maiuscula (char *s) {
     for (int i = 0; s[i]; i++)
         s[i] = toupper(s[i]);
@@ -190,5 +199,29 @@ void removeLocais (int contaVar) {
     }
     posTab = i + 1;     //Incrementar 1, porque a nova posição tem que ser um valor abaixo
     // printf("A func eh: %s\n", tabSimb[i].id);
+}
 
+int localizaFunc () {
+    int i = posTab;
+    i--;
+
+    for (; i > 0 && tabSimb[i].cat != 'F'; i--){
+        ;
+    }
+    printf("A posicao da func eh: %d\n", i);
+    return i;
+}
+
+/* Acessa a pilha e conta quantos tipos existem na pilha de acordo com o tipo do parametro passado*/
+int contaTipoPilha (char tipo) {
+    int topoP = topo;
+    int contaTipo = 0;
+    printf("O topo da pilha eh: %d\n", topoP);
+
+    for (int i = topoP; pilha[i].tipo == tipo && i > 0; i--) {
+        contaTipo++;
+    }
+    
+    printf("Existem %d tipos no topo da pilha\n", contaTipo);
+    return contaTipo;
 }

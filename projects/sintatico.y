@@ -460,10 +460,23 @@ chamada
       T_FECHA
         {
             puts("\nIsolando o erro 3");                          // TEM ALGUM ERRO AQUI
-                                                                    
-            for (int i = contaPar /*+ contaVar*/; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS E VARIÁVEIS
-                // printf("O valor de i eh: %d\n", i);
-                desempilha('t');
+
+
+            mostraTabela();
+            int posicao = localizaFunc();  
+
+            /* Função que conta quantos tipos tem no topo da pilha */
+            mostraPilha();
+            int contaArg = contaTipoPilha('t');
+            
+            if(contaArg != contaPar) {
+                yyerror ("Incompatibilidade entre quantidade de argumentos e parametros!");
+            }
+
+            for (int i = contaPar; i > 0; i--) {     //DESEMPILHANDO OS TIPOS DOS PARÂMETROS
+                if(desempilha('t') != tabSimb[posicao].par[posicao + i]) {          // Verifica se o tipo do argumento passado é igual ao esperado no parâmetro da função. Caso não seja, retorna erro. (Resolve o problema de tipo e quantidade diferente)
+                    yyerror ("Incompatibilidade entre tipos de argumentos e parametros!");
+                }
             }
 
             mostraPilha();
